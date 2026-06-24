@@ -130,6 +130,39 @@ Dinleyen sistemler:
 * Analytics
 * Navigation handler
 
+### ✅ Step 2 Durumu
+
+Step 2 uygulandı.
+
+Auth bounded context altında şu parçalar eklendi:
+
+* Domain: `UserIdentity`, `Password`, `Token`, `AuthSession`, `AuthRepository`, `UserLoggedInEvent`
+* Application: `LoginUserUseCase`, `RegisterUserUseCase`
+* Infrastructure: `AuthApiClient`, `ApiAuthRepository`, `BrowserSessionStorage`
+* Presentation: çalışan login/register formu
+
+Çalışan API route'ları:
+
+* `POST /user/login`
+  * `fikret / fikret` için `a125sdfg` token döner
+  * hatalı bilgi için `401` döner
+* `POST /user/register`
+  * basit fake register session döner
+
+Event driven notification akışı:
+
+```text
+LoginPageView
+ → LoginUserUseCase
+ → ApiAuthRepository
+ → /user/login
+ → UserLoggedInEvent
+ → AuthToastSubscriber
+ → Toast UI
+```
+
+Login başarılı olduğunda token browser `localStorage` içine kaydedilir.
+
 ---
 
 # 🧾 3. STEP — Product Catalog (Ürün Listeleme Sistemi)
