@@ -5,6 +5,8 @@
 
 Bu proje, Next.js + TypeScript kullanılarak geliştirilecek bir e-ticaret frontend uygulamasıdır. Uygulama çalışabilmesi için, next js de yine bu endpointleri çok basit bir şekilde oluştur. Örnegin, /user/login ve eger ki kullanıcı fikret, password fikret ise, a125sdfg gibi token ve gerekli basit degerler döndürsün. Dedigim gibi burada amaç backend degil, frontendde arhitecture görmek. Ayrıca frontend tarafında tasarım aşırı basit olsun, tasarım yapmaya ugraşma, tek amacımız arhitecture'ı görmek. Uygulama yine belirtilen aksiyonları gerçekleştirebilsin, kod çalışsın.
 
+Canlı demo: https://fik-clean-arch-kit.vercel.app/
+
 ---
 
 # 🧩 1. STEP — Domain & Modül Sınırları (DDD Temeli)
