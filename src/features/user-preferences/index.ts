@@ -1,0 +1,1 @@
+export { userPreferencesModule } from "./module";

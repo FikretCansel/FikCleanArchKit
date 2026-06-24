@@ -1,0 +1,1 @@
+export { notificationModule } from "./module";

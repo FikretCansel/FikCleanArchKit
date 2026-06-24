@@ -1,65 +1,99 @@
-import Image from "next/image";
+import {
+  authModule,
+  catalogModule,
+  notificationModule,
+  userPreferencesModule
+} from "@/features";
+import { layerDependencyRules } from "@/shared/architecture";
+
+const featureModules = [
+  authModule,
+  catalogModule,
+  userPreferencesModule,
+  notificationModule
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-white px-6 py-10 text-zinc-950">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
+        <section className="border-b border-zinc-200 pb-8">
+          <p className="text-sm font-medium uppercase tracking-wide text-zinc-500">
+            Step 1
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          <h1 className="mt-2 text-3xl font-semibold tracking-normal">
+            Domain and Module Boundaries
+          </h1>
+          <p className="mt-4 max-w-3xl text-base leading-7 text-zinc-600">
+            CleanShop is split into independent bounded contexts. Each feature
+            owns the same Clean Architecture layers and exposes only its public
+            module boundary.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-semibold">Bounded Contexts</h2>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {featureModules.map((feature) => (
+              <article
+                className="rounded-lg border border-zinc-200 p-5"
+                key={feature.boundedContext}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-lg font-semibold">{feature.name}</h3>
+                    <p className="mt-1 font-mono text-xs text-zinc-500">
+                      {feature.path}
+                    </p>
+                  </div>
+                  <span className="shrink-0 rounded border border-zinc-300 px-2 py-1 text-xs text-zinc-600">
+                    {feature.communication}
+                  </span>
+                </div>
+                <p className="mt-4 text-sm leading-6 text-zinc-600">
+                  {feature.responsibility}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {feature.layers.map((layer) => (
+                    <span
+                      className="rounded border border-zinc-200 px-2 py-1 text-xs text-zinc-700"
+                      key={layer}
+                    >
+                      {layer}
+                    </span>
+                  ))}
+                </div>
+                <ul className="mt-4 space-y-1 text-sm text-zinc-600">
+                  {feature.publicApi.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-semibold">Layer Dependency Rule</h2>
+          <div className="mt-4 overflow-hidden rounded-lg border border-zinc-200">
+            {layerDependencyRules.map((layer) => (
+              <div
+                className="grid gap-3 border-b border-zinc-200 p-4 last:border-b-0 md:grid-cols-[160px_1fr_220px]"
+                key={layer.name}
+              >
+                <strong className="font-mono text-sm">{layer.name}</strong>
+                <p className="text-sm text-zinc-600">{layer.responsibility}</p>
+                <p className="text-sm text-zinc-500">
+                  Depends on:{" "}
+                  {layer.mayDependOn.length > 0
+                    ? layer.mayDependOn.join(", ")
+                    : "none"}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
       </main>
-    </div>
   );
 }
