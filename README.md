@@ -321,6 +321,12 @@ ProductPage
 
 # 🔔 5. STEP — Event Driven Notification System
 
+# Final Result
+
+Sisteme axios eklendi diyelim. Sistem nasıl olmadı
+
+Proje diyelim react dan angular'a taşındı. Bu arhitecture business logici bagımsız yaptık ve aynı kodun kullanabiliyor olması gerekiyordu.
+
 ## Özellikler:
 
 * Login success toast
