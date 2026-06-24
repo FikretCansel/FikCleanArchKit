@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AppHeader } from "./components/AppHeader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,7 +17,10 @@ export default function RootLayout({
       lang="tr"
       className="h-full antialiased"
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full bg-white text-zinc-950">
+        <AppHeader />
+        {children}
+      </body>
     </html>
   );
 }

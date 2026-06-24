@@ -3,7 +3,7 @@
 
 ## 🎯 Amaç
 
-Bu proje, Next.js + TypeScript kullanılarak geliştirilecek bir e-ticaret frontend uygulamasıdır. Ama temel hedef ürün geliştirmekten çok **enterprise seviyesinde mimari tasarım ve pattern kullanımını öğrenmek ve göstermek**tir. Uygulama çalışabilmesi için, next js de yine bu endpointleri çok basit bir şekilde oluştur. Örnegin, /user/login ve eger ki kullanıcı fikret, password fikret ise, a125sdfg gibi token ve gerekli basit degerler döndürsün. Dedigim gibi burada amaç backend degil, frontendde arhitecture görmek. Ayrıca frontend tarafında tasarım aşırı basit olsun, tasarım yapmaya ugraşma, tek amacımız arhitecture'ı görmek. Uygulama yine belirtilen aksiyonları gerçekleştirebilsin, kod çalışsın.
+Bu proje, Next.js + TypeScript kullanılarak geliştirilecek bir e-ticaret frontend uygulamasıdır. Uygulama çalışabilmesi için, next js de yine bu endpointleri çok basit bir şekilde oluştur. Örnegin, /user/login ve eger ki kullanıcı fikret, password fikret ise, a125sdfg gibi token ve gerekli basit degerler döndürsün. Dedigim gibi burada amaç backend degil, frontendde arhitecture görmek. Ayrıca frontend tarafında tasarım aşırı basit olsun, tasarım yapmaya ugraşma, tek amacımız arhitecture'ı görmek. Uygulama yine belirtilen aksiyonları gerçekleştirebilsin, kod çalışsın.
 
 ---
 
@@ -32,6 +32,38 @@ presentation/
 ```
 
 👉 Amaç: “feature bağımsızlığı”
+
+### ✅ Step 1 Durumu
+
+Step 1 uygulandı.
+
+* `src/features/auth`
+* `src/features/catalog`
+* `src/features/user-preferences`
+* `src/features/notification`
+
+Her bounded context altında şu katmanlar oluşturuldu:
+
+```text
+domain/
+application/
+infrastructure/
+presentation/
+```
+
+Çalışan basit UI route'ları:
+
+* `/` ve `/login` → Auth login UI
+* `/catalog` → Catalog UI iskeleti
+* `/preferences` → User Preferences UI iskeleti
+* `/notifications` → Notification UI iskeleti
+* `/docs` → Step 1 mimari dokümantasyon ekranı
+
+Ana header üzerinden bu sayfalara erişilebilir.
+
+### 📌 Proje Kuralı
+
+Her yeni step veya mimari değişiklikte `ReadMe.md` güncel tutulacaktır.
 
 ---
 
