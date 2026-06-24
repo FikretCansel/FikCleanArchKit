@@ -220,6 +220,39 @@ EmptyState → NotFoundView
 
 IF/ELSE UI’da kullanılmaz, state ile çözülür.
 
+### ✅ Step 3 Durumu
+
+Step 3 uygulandı.
+
+Catalog bounded context altında şu parçalar eklendi:
+
+* Domain: `Product`, `ProductRepository`, `ProductListMode`
+* Application: `GetProductsQuery`, `ProductListState`
+* Infrastructure: `CatalogApiClient`, `ApiProductRepository`
+* Presentation: `CatalogPageView`, `ProductListStateView`
+
+Çalışan API route'u:
+
+* `GET /api/products`
+  * varsayılan durumda ürün listesi döner
+  * `?mode=empty` ile boş liste döner
+  * `?mode=error` ile hata state'i test edilir
+
+Catalog UI akışı:
+
+```text
+CatalogPageView
+ → GetProductsQuery
+ → ProductRepository
+ → CatalogApiClient
+ → /api/products
+ → ProductListState
+ → ProductListStateView
+```
+
+UI doğrudan API çağırmaz. Loading, Empty, Loaded ve Error render davranışı
+`ProductListStateView` içindeki state renderer map üzerinden yönetilir.
+
 ---
 
 # 🎨 4. STEP — UI Rendering Strategy System (En kritik kısım)

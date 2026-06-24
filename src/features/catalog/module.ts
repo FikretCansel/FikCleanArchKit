@@ -6,6 +6,11 @@ export const catalogModule: FeatureModuleDefinition = {
   path: "src/features/catalog",
   responsibility: "Product listing and product read state.",
   layers: ["domain", "application", "infrastructure", "presentation"],
-  publicApi: ["Product read models", "Catalog queries", "Product repository contracts"],
+  publicApi: [
+    "Product read models",
+    "GetProductsQuery",
+    "ProductListState",
+    "ProductRepository contracts"
+  ],
   communication: "events"
 };
