@@ -1,16 +1,15 @@
-export type AuthApiResponse = {
-  user: {
-    username: string;
-    displayName: string;
-  };
-  token: string;
-};
+import type {
+  AuthApiClientPort,
+  AuthApiPath,
+  AuthApiRequest,
+  AuthApiResponse
+} from "../AuthApiClient";
 
-export class AuthApiClient {
-  async post(path: "/user/login" | "/user/register", body: {
-    username: string;
-    password: string;
-  }): Promise<AuthApiResponse> {
+export class AuthFetchApiClient implements AuthApiClientPort {
+  async post(
+    path: AuthApiPath,
+    body: AuthApiRequest
+  ): Promise<AuthApiResponse> {
     const response = await fetch(path, {
       method: "POST",
       headers: {

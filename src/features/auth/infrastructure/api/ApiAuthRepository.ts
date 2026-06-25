@@ -1,9 +1,9 @@
-import type { AuthRepository, AuthSession, Password, UserIdentity } from "../domain";
-import { Token } from "../domain";
-import type { AuthApiClient } from "./AuthApiClient";
+import type { AuthRepository, AuthSession, Password, UserIdentity } from "../../domain";
+import { Token } from "../../domain";
+import type { AuthApiClientPort, AuthApiPath } from "./AuthApiClient";
 
 export class ApiAuthRepository implements AuthRepository {
-  constructor(private readonly apiClient: AuthApiClient) {}
+  constructor(private readonly apiClient: AuthApiClientPort) {}
 
   async login(credentials: {
     username: UserIdentity;
@@ -20,7 +20,7 @@ export class ApiAuthRepository implements AuthRepository {
   }
 
   private async authenticate(
-    path: "/user/login" | "/user/register",
+    path: AuthApiPath,
     credentials: {
       username: UserIdentity;
       password: Password;

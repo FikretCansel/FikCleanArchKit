@@ -21,7 +21,7 @@ const pageArchitecture = [
     architecture: "DDD bounded context, Clean Architecture",
     patterns: "Use Case, Repository, Value Object, Event Bus, Observer",
     flow:
-      "LoginPageView -> LoginUserUseCase -> AuthRepository -> AuthApiClient -> /user/login -> UserLoggedInEvent -> Toast"
+      "LoginPageView -> LoginUserUseCase -> AuthRepository -> AuthApiClientPort -> AuthApiClient adapter -> /user/login -> UserLoggedInEvent -> Toast"
   },
   {
     route: "/catalog",
@@ -392,3 +392,4 @@ export default function DocsPage() {
     </main>
   );
 }
+

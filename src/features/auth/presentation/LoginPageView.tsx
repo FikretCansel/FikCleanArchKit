@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { LoginUserUseCase, RegisterUserUseCase } from "../application";
 import {
   ApiAuthRepository,
-  AuthApiClient,
-  BrowserSessionStorage
+  BrowserSessionStorage,
+  createAuthApiClient
 } from "../infrastructure";
 import { clientEventBus } from "@/shared/events/clientEventBus";
 import { AuthToastSubscriber } from "@/features/notification/application";
@@ -21,7 +21,7 @@ export function LoginPageView() {
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
   const services = useMemo(() => {
-    const repository = new ApiAuthRepository(new AuthApiClient());
+    const repository = new ApiAuthRepository(createAuthApiClient());
 
     return {
       loginUser: new LoginUserUseCase(repository, clientEventBus),
@@ -119,3 +119,4 @@ export function LoginPageView() {
     </main>
   );
 }
+
