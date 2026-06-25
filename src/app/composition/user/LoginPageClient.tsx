@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { BrowserSessionStorage } from "@/features/auth/infrastructure";
+import { LoginPageControllerProvider } from "@/features/auth/presentation/LoginPageController";
 import { LoginPageView } from "@/features/auth/presentation/LoginPageView";
 import type {
   LoginAuthenticationInput,
@@ -21,10 +22,11 @@ export function LoginPageClient({
   const sessionStorage = useMemo(() => new BrowserSessionStorage(), []);
 
   return (
-    <LoginPageView
+    <LoginPageControllerProvider
       authenticate={authenticate}
-      content={content}
       persistSession={(session) => sessionStorage.saveSnapshot(session)}
-    />
+    >
+      <LoginPageView content={content} />
+    </LoginPageControllerProvider>
   );
 }

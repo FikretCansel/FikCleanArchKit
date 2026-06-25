@@ -174,6 +174,9 @@ Composition ayrımı:
   session yazma işi ayrı client adapter'da kalır.
 * `/login` sayfası SEO metadata ve sayfa metni gibi server kaynaklı bilgileri
   server component tarafında composition'dan alabilir.
+* Derin component ağacına servis prop'u taşınmaz; presentation katmanında
+  feature-specific controller context kullanılır. Alt component'ler
+  `useLoginPageController()` ile sadece login/register niyetini bildirir.
 
 ---
 
