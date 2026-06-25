@@ -1,54 +1,51 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { LoginUserUseCase, RegisterUserUseCase } from "../application";
-import {
-  ApiAuthRepository,
-  BrowserSessionStorage,
-  createAuthApiClient
-} from "../infrastructure";
-import { clientEventBus } from "@/shared/events/clientEventBus";
-import { AuthToastSubscriber } from "@/features/notification/application";
-import type { ToastMessage } from "@/features/notification/domain";
+import { useState } from "react";
+import type {
+  LoginAuthenticationInput,
+  LoginAuthenticationResult,
+  LoginPageContent
+} from "./LoginPageModel";
 
-export function LoginPageView() {
+type LoginPageViewProps = {
+  content: LoginPageContent;
+  authenticate(input: LoginAuthenticationInput): Promise<LoginAuthenticationResult>;
+  persistSession(session: LoginAuthenticationResult): void;
+};
+
+type LoginToastMessage = {
+  message: string;
+};
+
+export function LoginPageView({
+  content,
+  authenticate: authenticateUser,
+  persistSession
+}: LoginPageViewProps) {
   const [username, setUsername] = useState("fikret");
   const [password, setPassword] = useState("fikret");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle"
   );
   const [message, setMessage] = useState("");
-  const [toast, setToast] = useState<ToastMessage | null>(null);
+  const [toast, setToast] = useState<LoginToastMessage | null>(null);
 
-  const services = useMemo(() => {
-    const repository = new ApiAuthRepository(createAuthApiClient());
-
-    return {
-      loginUser: new LoginUserUseCase(repository, clientEventBus),
-      registerUser: new RegisterUserUseCase(repository, clientEventBus),
-      sessionStorage: new BrowserSessionStorage()
-    };
-  }, []);
-
-  useEffect(() => {
-    const subscriber = new AuthToastSubscriber(clientEventBus, setToast);
-
-    return subscriber.subscribe();
-  }, []);
-
-  async function authenticate(mode: "login" | "register") {
+  async function submitAuthentication(mode: "login" | "register") {
     setStatus("loading");
     setMessage("");
+    setToast(null);
 
     try {
-      const session =
-        mode === "login"
-          ? await services.loginUser.execute({ username, password })
-          : await services.registerUser.execute({ username, password });
+      const session = await authenticateUser({
+        mode,
+        username,
+        password
+      });
 
-      services.sessionStorage.save(session);
+      persistSession(session);
       setStatus("success");
-      setMessage(`Token kaydedildi: ${session.token.value()}`);
+      setMessage(`Token kaydedildi: ${session.token}`);
+      setToast({ message: `${session.username} icin oturum acildi.` });
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Beklenmeyen hata.");
@@ -58,9 +55,13 @@ export function LoginPageView() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
       <section className="max-w-sm">
-        <h1 className="text-2xl font-semibold">Login</h1>
+        <p className="text-sm font-medium text-zinc-500">{content.projectName}</p>
+        <h1 className="mt-1 text-2xl font-semibold">{content.title}</h1>
         <p className="mt-2 text-sm text-zinc-600">
-          Kullanici adi ve sifre: fikret / fikret
+          {content.description}
+        </p>
+        <p className="mt-2 text-sm text-zinc-600">
+          {content.credentialsHint}
         </p>
         <form className="mt-6 space-y-4" onSubmit={(event) => event.preventDefault()}>
           <label className="block text-sm">
@@ -86,7 +87,7 @@ export function LoginPageView() {
             <button
               className="rounded bg-zinc-950 px-4 py-2 text-sm font-medium text-white disabled:bg-zinc-400"
               disabled={status === "loading"}
-              onClick={() => authenticate("login")}
+              onClick={() => submitAuthentication("login")}
               type="button"
             >
               Login
@@ -94,7 +95,7 @@ export function LoginPageView() {
             <button
               className="rounded border border-zinc-300 px-4 py-2 text-sm font-medium disabled:text-zinc-400"
               disabled={status === "loading"}
-              onClick={() => authenticate("register")}
+              onClick={() => submitAuthentication("register")}
               type="button"
             >
               Register

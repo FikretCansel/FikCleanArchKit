@@ -165,6 +165,16 @@ LoginPageView
 
 Login başarılı olduğunda token browser `localStorage` içine kaydedilir.
 
+Composition ayrımı:
+
+* `loginComposition.ts` server-safe tutulur; use case, repository ve API client
+  burada kurulur.
+* Client component'ler application service veya repository import etmez.
+* Login formu server action üzerinden use case çalıştırır; browser'a özel
+  session yazma işi ayrı client adapter'da kalır.
+* `/login` sayfası SEO metadata ve sayfa metni gibi server kaynaklı bilgileri
+  server component tarafında composition'dan alabilir.
+
 ---
 
 # 🧾 3. STEP — Product Catalog (Ürün Listeleme Sistemi)

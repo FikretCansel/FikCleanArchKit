@@ -1,28 +1,20 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  GetProductsQuery,
-  productListState
-} from "../application";
+import { useCallback, useEffect, useState } from "react";
+import { productListState } from "../application";
+import type { GetProductsQuery } from "../application";
 import type { ProductListState } from "../application";
-import {
-  ApiProductRepository,
-  createCatalogApiClient
-} from "../infrastructure";
 import { ProductListStateView } from "./ProductListStateView";
 import type { ProductListMode } from "../domain";
 
-export function CatalogPageView() {
+type CatalogPageViewProps = {
+  getProductsQuery: GetProductsQuery;
+};
+
+export function CatalogPageView({ getProductsQuery }: CatalogPageViewProps) {
   const [state, setState] = useState<ProductListState>(
     productListState.loading()
   );
-
-  const getProductsQuery = useMemo(() => {
-    return new GetProductsQuery(
-      new ApiProductRepository(createCatalogApiClient())
-    );
-  }, []);
 
   const loadProducts = useCallback(async (mode: ProductListMode = "default") => {
     setState(productListState.loading());

@@ -21,7 +21,7 @@ const pageArchitecture = [
     architecture: "DDD bounded context, Clean Architecture",
     patterns: "Use Case, Repository, Value Object, Event Bus, Observer",
     flow:
-      "LoginPageView -> LoginUserUseCase -> AuthRepository -> AuthApiClientPort -> shared HttpClient -> /user/login -> UserLoggedInEvent -> Toast"
+      "LoginPageContainer -> createLoginComposition -> LoginPageView -> LoginUserUseCase -> AuthRepository -> AuthApiClientPort -> shared HttpClient -> /user/login -> UserLoggedInEvent -> Toast"
   },
   {
     route: "/catalog",
@@ -30,7 +30,7 @@ const pageArchitecture = [
     architecture: "DDD bounded context, Clean Architecture, CQRS read side",
     patterns: "Query, Repository, State Pattern",
     flow:
-      "CatalogPageView -> GetProductsQuery -> ProductRepository -> CatalogApiClientPort -> shared HttpClient -> /api/products -> ProductListState"
+      "CatalogPageContainer -> createCatalogComposition -> CatalogPageView -> GetProductsQuery -> ProductRepository -> CatalogApiClientPort -> shared HttpClient -> /api/products -> ProductListState"
   },
   {
     route: "/preferences",
@@ -76,9 +76,9 @@ const patternGuide = [
     name: "Clean Architecture",
     usedIn: "Auth login/register, Catalog product listing",
     job:
-      "UI application katmanini cagirir; application domain contractlara dayanir; infrastructure dis dunya detaylarini uygular.",
+      "Composition root concrete bagimliliklari kurar; presentation application katmanini cagirir; application domain contractlara dayanir; infrastructure dis dunya detaylarini uygular.",
     why:
-      "API degisirse UI degismez. Use case ve repository contract ayni kaldigi surece altyapi yenilenebilir.",
+      "API degisirse UI degismez. Presentation infrastructure veya app composition import etmez. Use case ve repository contract ayni kaldigi surece altyapi yenilenebilir.",
     alternatives:
       "Component icinde fetch, server action merkezli akış veya global service singleton. Daha kisa olurdu ama egitim amacli katmanlari gizlerdi."
   },
@@ -146,6 +146,11 @@ const patternGuide = [
 
 const fileBoundaries = [
   {
+    layer: "composition root",
+    canDo: "Concrete repository, API client, storage, event bus ve subscriber baglantilarini kurar.",
+    cannotDo: "Business kuralini sahiplenmez; sadece bagimliliklari birbirine baglar."
+  },
+  {
     layer: "domain",
     canDo: "Entity, value object, domain event ve repository contract tanimlar.",
     cannotDo: "fetch, localStorage, React hook veya UI render yapmaz."
@@ -163,7 +168,7 @@ const fileBoundaries = [
   {
     layer: "presentation",
     canDo: "React component, form state, loading gostergesi ve view model binding yapar.",
-    cannotDo: "API endpointini direkt sahiplenmez; use case veya query cagirir."
+    cannotDo: "Infrastructure veya app composition import etmez; API endpointini direkt sahiplenmez."
   }
 ];
 
@@ -335,6 +340,9 @@ export default function DocsPage() {
             <pre className="overflow-auto text-sm leading-6 text-zinc-700">
 {`src/
   app/
+    composition/
+      user/
+      catalog/
     login/page.tsx
     catalog/page.tsx
     docs/page.tsx
@@ -360,7 +368,8 @@ export default function DocsPage() {
             </pre>
             <p className="mt-4 text-sm leading-6 text-zinc-600">
               `app` sadece route ve Next.js entry pointlerini tutar. Asil is
-              kurallari `features` altindadir. `shared` ise feature bagimsiz
+              kurallari `features` altindadir. `app/composition` concrete
+              dependency wiring alanidir. `shared` ise feature bagimsiz
               architecture, event ve HTTP transport abstractionlarini saklar.
             </p>
           </div>
@@ -372,7 +381,9 @@ export default function DocsPage() {
             <article className="rounded-lg border border-zinc-200 p-5">
               <h3 className="font-semibold">Kurallar</h3>
               <ul className="mt-3 space-y-2 text-sm leading-6 text-zinc-600">
+                <li>`app/composition` concrete dependency wiring alanidir.</li>
                 <li>UI direkt API cagirmaz.</li>
+                <li>Presentation katmani infrastructure veya app composition import etmez.</li>
                 <li>Featurelar birbirinin infrastructure dosyasini import etmez.</li>
                 <li>Domain React, Next.js, fetch ve browser API bilmez.</li>
                 <li>Cross-feature iletisim event veya shared abstraction ile olur.</li>

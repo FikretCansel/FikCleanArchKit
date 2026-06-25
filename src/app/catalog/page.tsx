@@ -1,5 +1,5 @@
-import { CatalogPageView } from "@/features/catalog/presentation/CatalogPageView";
+import { CatalogPageContainer } from "@/app/composition/catalog/CatalogPageContainer";
 
 export default function CatalogPage() {
-  return <CatalogPageView />;
+  return <CatalogPageContainer />;
 }

@@ -1,5 +1,5 @@
-import { LoginPageView } from "@/features/auth/presentation/LoginPageView";
+import { LoginPageContainer } from "@/app/composition/user/LoginPageContainer";
 
 export default function Home() {
-  return <LoginPageView />;
+  return <LoginPageContainer />;
 }
