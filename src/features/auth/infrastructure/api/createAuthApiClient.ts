@@ -1,6 +1,6 @@
-import type { AuthApiClientPort } from "./AuthApiClient";
-import { AuthFetchApiClient } from "./adapters/AuthFetchApiClient";
+import { createHttpClient } from "@/shared/http";
+import { AuthApiClient } from "./AuthApiClient";
 
-export function createAuthApiClient(): AuthApiClientPort {
-  return new AuthFetchApiClient();
+export function createAuthApiClient(): AuthApiClient {
+  return new AuthApiClient(createHttpClient());
 }

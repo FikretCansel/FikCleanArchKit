@@ -1,3 +1,4 @@
 # Catalog Infrastructure
 
-Owns API product repositories and catalog data adapters.
+Owns catalog-specific API repositories and catalog API contracts.
+Generic HTTP transport adapters live in `src/shared/http`.

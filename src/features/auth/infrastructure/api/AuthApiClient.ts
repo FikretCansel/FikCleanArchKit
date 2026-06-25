@@ -1,3 +1,5 @@
+import type { HttpClientPort } from "@/shared/http";
+
 export type AuthApiResponse = {
   user: {
     username: string;
@@ -15,4 +17,15 @@ export type AuthApiRequest = {
 
 export interface AuthApiClientPort {
   post(path: AuthApiPath, body: AuthApiRequest): Promise<AuthApiResponse>;
+}
+
+export class AuthApiClient implements AuthApiClientPort {
+  constructor(private readonly httpClient: HttpClientPort) {}
+
+  async post(
+    path: AuthApiPath,
+    body: AuthApiRequest
+  ): Promise<AuthApiResponse> {
+    return this.httpClient.post<AuthApiResponse>(path, body);
+  }
 }

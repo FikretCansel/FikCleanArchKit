@@ -21,7 +21,7 @@ const pageArchitecture = [
     architecture: "DDD bounded context, Clean Architecture",
     patterns: "Use Case, Repository, Value Object, Event Bus, Observer",
     flow:
-      "LoginPageView -> LoginUserUseCase -> AuthRepository -> AuthApiClientPort -> AuthApiClient adapter -> /user/login -> UserLoggedInEvent -> Toast"
+      "LoginPageView -> LoginUserUseCase -> AuthRepository -> AuthApiClientPort -> shared HttpClient -> /user/login -> UserLoggedInEvent -> Toast"
   },
   {
     route: "/catalog",
@@ -30,7 +30,7 @@ const pageArchitecture = [
     architecture: "DDD bounded context, Clean Architecture, CQRS read side",
     patterns: "Query, Repository, State Pattern",
     flow:
-      "CatalogPageView -> GetProductsQuery -> ProductRepository -> CatalogApiClient -> /api/products -> ProductListState"
+      "CatalogPageView -> GetProductsQuery -> ProductRepository -> CatalogApiClientPort -> shared HttpClient -> /api/products -> ProductListState"
   },
   {
     route: "/preferences",
@@ -355,12 +355,13 @@ export default function DocsPage() {
     user-preferences/
   shared/
     architecture/
-    events/`}
+    events/
+    http/`}
             </pre>
             <p className="mt-4 text-sm leading-6 text-zinc-600">
               `app` sadece route ve Next.js entry pointlerini tutar. Asil is
               kurallari `features` altindadir. `shared` ise feature bagimsiz
-              architecture ve event contractlarini saklar.
+              architecture, event ve HTTP transport abstractionlarini saklar.
             </p>
           </div>
         </section>

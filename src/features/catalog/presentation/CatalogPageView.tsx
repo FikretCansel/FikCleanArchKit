@@ -8,7 +8,7 @@ import {
 import type { ProductListState } from "../application";
 import {
   ApiProductRepository,
-  CatalogApiClient
+  createCatalogApiClient
 } from "../infrastructure";
 import { ProductListStateView } from "./ProductListStateView";
 import type { ProductListMode } from "../domain";
@@ -20,7 +20,7 @@ export function CatalogPageView() {
 
   const getProductsQuery = useMemo(() => {
     return new GetProductsQuery(
-      new ApiProductRepository(new CatalogApiClient())
+      new ApiProductRepository(createCatalogApiClient())
     );
   }, []);
 

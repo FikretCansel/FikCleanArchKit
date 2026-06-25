@@ -1,4 +1,5 @@
 export { ApiAuthRepository } from "./api/ApiAuthRepository";
+export { AuthApiClient } from "./api/AuthApiClient";
 export { createAuthApiClient } from "./api/createAuthApiClient";
 export type {
   AuthApiClientPort,
