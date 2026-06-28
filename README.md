@@ -39,10 +39,18 @@ presentation/
 
 Step 1 uygulandı.
 
-* `src/features/auth`
-* `src/features/catalog`
-* `src/features/user-preferences`
-* `src/features/notification`
+Ortak clean architecture kodu:
+
+* `packages/core/src/features/auth`
+* `packages/core/src/features/catalog`
+* `packages/core/src/features/user-preferences`
+* `packages/core/src/features/notification`
+
+Uygulama kabuklari:
+
+* `apps/web` → Next.js web uygulamasi
+* `apps/mobile` → ileride React Native uygulamasi icin ayrildi
+* `apps/backend` → ileride Spring Boot backend icin ayrildi
 
 Her bounded context altında şu katmanlar oluşturuldu:
 

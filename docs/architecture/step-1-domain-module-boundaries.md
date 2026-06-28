@@ -1,6 +1,7 @@
 # Step 1 - Domain & Module Boundaries
 
-The frontend is split into independent bounded contexts under `src/features`.
+The shared frontend core is split into independent bounded contexts under
+`packages/core/src/features`.
 Each feature owns the same Clean Architecture layers:
 
 ```text
@@ -38,3 +39,19 @@ of importing each other directly.
 This step intentionally creates the architectural foundation only. Concrete use
 cases, repositories, value objects, API routes and UI flows belong to later
 steps.
+
+## Workspace Layout
+
+```text
+apps/
+  web/
+  mobile/
+  backend/
+packages/
+  core/
+```
+
+`apps/web` owns the Next.js route shell and composition roots. `apps/mobile` is
+reserved for the future React Native shell. `apps/backend` is reserved for the
+future Spring Boot backend. Shared business rules and feature boundaries stay in
+`packages/core`.
