@@ -5,8 +5,6 @@ import { fileURLToPath } from "node:url";
 const appRoot = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(appRoot, "../..");
 const coreSrc = join(repoRoot, "packages/core/src");
-const appNodeModules = join(appRoot, "node_modules");
-const reactPackage = join(appNodeModules, "react");
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -16,24 +14,14 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: repoRoot,
     resolveAlias: {
-      "@core": coreSrc,
-      react: reactPackage,
-      "react/jsx-runtime": join(reactPackage, "jsx-runtime.js"),
-      "react/jsx-dev-runtime": join(reactPackage, "jsx-dev-runtime.js")
+      "@core": coreSrc
     }
   },
   webpack(config) {
     config.resolve.alias = {
       ...config.resolve.alias,
-      "@core": coreSrc,
-      react: reactPackage,
-      "react/jsx-runtime": join(reactPackage, "jsx-runtime.js"),
-      "react/jsx-dev-runtime": join(reactPackage, "jsx-dev-runtime.js")
+      "@core": coreSrc
     };
-    config.resolve.modules = [
-      appNodeModules,
-      ...(config.resolve.modules ?? [])
-    ];
 
     return config;
   }

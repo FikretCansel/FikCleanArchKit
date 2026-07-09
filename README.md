@@ -1,5 +1,4 @@
-
-# 🧱 Proje: CleanShop Frontend (TypeScript + React)
+# 🧱 Proje: CleanShop Frontend (TypeScript + Nextjs)
 
 ## 🎯 Amaç
 

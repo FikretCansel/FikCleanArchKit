@@ -1,25 +1,35 @@
 {
-  "name": "fik-stack",
+  "name": "fik-mono",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
-    "dev": "npm run dev:web",
-
     "dev:web": "npm run dev --workspace=apps/web",
     "dev:mobile": "npm run start --workspace=apps/mobile",
 
     "dev:backend": "cd apps/backend && mvnw spring-boot:run",
 
     "dev:all": "npx npm-run-all --parallel dev:web dev:mobile dev:backend",
-
-    "build": "npm run build --workspaces",
-
-    "clean": "rm -rf node_modules apps/**/node_modules packages/**/node_modules .next"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5"
-  }
+    "prettier": "^3.7.4",
+    "turbo": "^2.10.4",
+    "typescript": "5.9.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": "10.9.2"
+    }
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
