@@ -3,7 +3,7 @@ import {
   ApiAuthRepository,
   createAuthApiClient
 } from "@core/features/auth/infrastructure";
-import type { LoginPageContent } from "@/features/auth/presentation/LoginPageModel";
+import type { LoginPageContent } from "@/features/auth/presentation/LoginPageViewModel";
 import type { EventBus } from "@core/shared/events/EventBus";
 import { InMemoryEventBus } from "@core/shared/events/InMemoryEventBus";
 

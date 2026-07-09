@@ -8,7 +8,7 @@ import type {
   LoginAuthenticationInput,
   LoginAuthenticationResult,
   LoginPageContent
-} from "@/features/auth/presentation/LoginPageModel";
+} from "@/features/auth/presentation/LoginPageViewModel";
 
 type LoginPageClientProps = {
   content: LoginPageContent;

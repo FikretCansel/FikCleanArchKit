@@ -1,7 +1,7 @@
 "use client";
 
 import { useLoginPageController } from "./LoginPageController";
-import type { LoginPageContent } from "./LoginPageModel";
+import type { LoginPageContent } from "./LoginPageViewModel";
 
 type LoginPageViewProps = {
   content: LoginPageContent;

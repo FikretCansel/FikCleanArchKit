@@ -10,7 +10,7 @@ import {
 import type {
   LoginAuthenticationInput,
   LoginAuthenticationResult
-} from "./LoginPageModel";
+} from "./LoginPageViewModel";
 
 type LoginStatus = "idle" | "loading" | "success" | "error";
 
