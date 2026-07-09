@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/buttons";
 import { useLoginPageController } from "./LoginPageController";
 import type { LoginPageContent } from "./LoginPageViewModel";
 
@@ -70,22 +71,20 @@ function LoginActionButtons() {
 
   return (
     <div className="flex gap-2">
-      <button
-        className="rounded bg-zinc-950 px-4 py-2 text-sm font-medium text-white disabled:bg-zinc-400"
+      <Button
         disabled={isLoading}
         onClick={() => submitAuthentication("login")}
-        type="button"
+        variant="danger"
       >
         Login
-      </button>
-      <button
-        className="rounded border border-zinc-300 px-4 py-2 text-sm font-medium disabled:text-zinc-400"
+      </Button>
+      <Button
         disabled={isLoading}
         onClick={() => submitAuthentication("register")}
-        type="button"
+        variant="secondary"
       >
         Register
-      </button>
+      </Button>
     </div>
   );
 }
