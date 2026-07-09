@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const appRoot = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(appRoot, "../..");
-const coreSrc = join(repoRoot, "packages/core/src");
+const coreSrc = join(repoRoot, "packages/frontend-core/src");
 
 const nextConfig: NextConfig = {
   experimental: {
