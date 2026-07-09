@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import type {
   LoginAuthenticationInput,
   LoginAuthenticationResult
-} from "@core/features/auth/presentation/LoginPageModel";
+} from "@/features/auth/presentation/LoginPageModel";
 import { createLoginApplicationComposition } from "./loginComposition";
 
 export async function authenticateUser(

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import type { Product } from "../domain";
-import type { ProductListState } from "../application";
+import type { ProductListState } from "@core/features/catalog/application";
+import type { Product } from "@core/features/catalog/domain";
 
 type ProductListStateViewProps = {
   state: ProductListState;

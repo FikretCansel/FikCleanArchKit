@@ -1,14 +1,14 @@
 "use client";
 
 import { useMemo } from "react";
-import { BrowserSessionStorage } from "@core/features/auth/infrastructure";
-import { LoginPageControllerProvider } from "@core/features/auth/presentation/LoginPageController";
-import { LoginPageView } from "@core/features/auth/presentation/LoginPageView";
+import { BrowserSessionStorage } from "@/features/auth/infrastructure/BrowserSessionStorage";
+import { LoginPageControllerProvider } from "@/features/auth/presentation/LoginPageController";
+import { LoginPageView } from "@/features/auth/presentation/LoginPageView";
 import type {
   LoginAuthenticationInput,
   LoginAuthenticationResult,
   LoginPageContent
-} from "@core/features/auth/presentation/LoginPageModel";
+} from "@/features/auth/presentation/LoginPageModel";
 
 type LoginPageClientProps = {
   content: LoginPageContent;

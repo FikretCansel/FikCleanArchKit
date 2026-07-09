@@ -1,5 +1,3 @@
-import type { AuthSession } from "../domain";
-
 const sessionKey = "cleanshop.auth.session";
 
 export type BrowserSessionSnapshot = {
@@ -8,13 +6,6 @@ export type BrowserSessionSnapshot = {
 };
 
 export class BrowserSessionStorage {
-  save(session: AuthSession): void {
-    this.saveSnapshot({
-      username: session.user.value(),
-      token: session.token.value()
-    });
-  }
-
   saveSnapshot(session: BrowserSessionSnapshot): void {
     window.localStorage.setItem(
       sessionKey,

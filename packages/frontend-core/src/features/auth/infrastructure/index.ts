@@ -7,5 +7,3 @@ export type {
   AuthApiRequest,
   AuthApiResponse
 } from "./api/AuthApiClient";
-export { BrowserSessionStorage } from "./BrowserSessionStorage";
-export type { BrowserSessionSnapshot } from "./BrowserSessionStorage";

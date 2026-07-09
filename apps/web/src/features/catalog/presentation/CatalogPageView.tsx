@@ -1,11 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { productListState } from "../application";
-import type { GetProductsQuery } from "../application";
-import type { ProductListState } from "../application";
+import {
+  productListState,
+  type GetProductsQuery,
+  type ProductListState
+} from "@core/features/catalog/application";
+import type { ProductListMode } from "@core/features/catalog/domain";
 import { ProductListStateView } from "./ProductListStateView";
-import type { ProductListMode } from "../domain";
 
 type CatalogPageViewProps = {
   getProductsQuery: GetProductsQuery;
