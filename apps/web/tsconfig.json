@@ -22,7 +22,7 @@
         "./src/*"
       ],
       "@core/*": [
-        "../../packages/core/src/*"
+        "../../packages/frontend-core/src/*"
       ]
     },
     "plugins": [
@@ -35,8 +35,8 @@
     "next-env.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "../../packages/core/src/**/*.ts",
-    "../../packages/core/src/**/*.tsx",
+    "../../packages/frontend-core/src/**/*.ts",
+    "../../packages/frontend-core/src/**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
