@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { LoginPageContainer } from "@/composition/user/LoginPageContainer";
-import { createLoginPageComposition } from "@/composition/user/loginComposition";
+import { LoginPageContainer } from "@/composition/auth/LoginPageContainer";
+import { createLoginPageComposition } from "@/composition/auth/loginComposition";
 
 export function generateMetadata(): Metadata {
   const { content } = createLoginPageComposition();
