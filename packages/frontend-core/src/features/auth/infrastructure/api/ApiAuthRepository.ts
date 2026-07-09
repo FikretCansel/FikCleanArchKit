@@ -9,14 +9,14 @@ export class ApiAuthRepository implements AuthRepository {
     username: UserIdentity;
     password: Password;
   }): Promise<AuthSession> {
-    return this.authenticate("/user/login", credentials);
+    return this.authenticate("/api/user/login", credentials);
   }
 
   async register(credentials: {
     username: UserIdentity;
     password: Password;
   }): Promise<AuthSession> {
-    return this.authenticate("/user/register", credentials);
+    return this.authenticate("/api/user/register", credentials);
   }
 
   private async authenticate(

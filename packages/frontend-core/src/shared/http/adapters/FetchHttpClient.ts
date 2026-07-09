@@ -27,13 +27,48 @@ export class FetchHttpClient implements HttpClientPort {
     init: RequestInit
   ): Promise<TResponse> {
     const response = await fetch(this.resolveUrl(path), init);
-    const payload = await response.json();
+    const payload = await this.parseResponsePayload<TResponse>(response);
 
     if (!response.ok) {
-      throw new Error(payload.message ?? "API istegi basarisiz oldu.");
+      throw new Error(
+        this.resolveErrorMessage(payload, response.status)
+      );
     }
 
     return payload;
+  }
+
+  private async parseResponsePayload<TResponse>(
+    response: Response
+  ): Promise<TResponse> {
+    const text = await response.text();
+
+    if (!text) {
+      return undefined as TResponse;
+    }
+
+    try {
+      return JSON.parse(text) as TResponse;
+    } catch {
+      throw new Error(
+        response.ok
+          ? "API yaniti JSON formatinda degil."
+          : `API istegi basarisiz oldu. HTTP ${response.status}`
+      );
+    }
+  }
+
+  private resolveErrorMessage(payload: unknown, status: number): string {
+    if (
+      payload &&
+      typeof payload === "object" &&
+      "message" in payload &&
+      typeof payload.message === "string"
+    ) {
+      return payload.message;
+    }
+
+    return `API istegi basarisiz oldu. HTTP ${status}`;
   }
 
   private resolveUrl(path: string): string {

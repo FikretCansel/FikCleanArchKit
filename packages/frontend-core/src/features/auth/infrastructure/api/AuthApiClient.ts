@@ -8,7 +8,7 @@ export type AuthApiResponse = {
   token: string;
 };
 
-export type AuthApiPath = "/user/login" | "/user/register";
+export type AuthApiPath = "/api/user/login" | "/api/user/register";
 
 export type AuthApiRequest = {
   username: string;
