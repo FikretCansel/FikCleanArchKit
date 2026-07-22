@@ -4,20 +4,19 @@
   "scripts": {
     "dev:web": "npm run dev --workspace=apps/web",
     "dev:mobile": "npm run start --workspace=apps/mobile",
-
     "dev:backend": "cd apps/backend && mvnw spring-boot:run",
-
     "dev:all": "npx npm-run-all --parallel dev:web dev:mobile dev:backend",
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "lint": "eslint apps/web/src packages/frontend-core/src",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
     "turbo": "^2.10.4",
-    "typescript": "5.9.2"
+    "typescript": "5.9.2",
+    "eslint-plugin-boundaries": "^7.1.0"
   },
   "engines": {
     "node": ">=18"
@@ -25,7 +24,7 @@
   "devEngines": {
     "packageManager": {
       "name": "npm",
-      "version": "10.9.2"
+      "version": "11.13.0"
     }
   },
   "workspaces": [

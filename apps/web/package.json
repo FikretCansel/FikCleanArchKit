@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "cd ../.. && eslint apps/web/src packages/frontend-core/src"
   },
   "dependencies": {
     "next": "16.2.9",

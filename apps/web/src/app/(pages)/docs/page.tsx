@@ -172,6 +172,46 @@ const fileBoundaries = [
   }
 ];
 
+const eslintBoundaryRules = [
+  {
+    from: "core/domain",
+    rule:
+      "Domain sadece kendi domain dosyalarina ve core/shared abstractionlarina bagimli olabilir. Application, infrastructure, web veya React katmanlarini import edemez."
+  },
+  {
+    from: "core/application",
+    rule:
+      "Application use case, query ve orchestration yazar; domain ve shared kullanabilir. Infrastructure veya web katmanlarini import edemez."
+  },
+  {
+    from: "core/infrastructure",
+    rule:
+      "Infrastructure adapter katmanidir. Domain contractlarini ve application portlarini uygular; HTTP client, repository implementation ve dis dunya detaylari burada kalir."
+  },
+  {
+    from: "web/presentation",
+    rule:
+      "Presentation React component, controller ve view model binding yapar. Core application/domain okuyabilir ama core infrastructure veya web infrastructure import edemez."
+  },
+  {
+    from: "web/composition",
+    rule:
+      "Composition root concrete bagimliliklari birlestiren tek yerdir. Use case, repository implementation, API client, storage ve subscriber wiring burada kurulur."
+  },
+  {
+    from: "web/components",
+    rule:
+      "Shared UI componentleri business flow bilmez. Sadece component, core/domain type veya core/shared abstraction kullanabilir."
+  }
+];
+
+const eslintBoundaryFiles = [
+  "eslint.config.mjs",
+  "packages/eslint-config/clean-architecture.js",
+  "apps/web/eslint.config.mjs",
+  "package.json",
+  "apps/web/package.json"
+];
 const nextOptions = [
   "Step 4: Catalog layout rendering icin Strategy Pattern ve LayoutStrategyFactory eklenebilir.",
   "Favorites icin ProductFavoritedEvent ve repository decorator eklenebilir.",
@@ -317,6 +357,51 @@ export default function DocsPage() {
         </section>
 
         <section>
+          <h2 className="text-xl font-semibold">ESLint Architecture Enforcement</h2>
+          <div className="mt-4 grid gap-4 lg:grid-cols-[1.5fr_1fr]">
+            <article className="rounded-lg border border-zinc-200 p-5">
+              <h3 className="font-semibold">eslint-plugin-boundaries</h3>
+              <p className="mt-3 text-sm leading-6 text-zinc-600">
+                Clean Architecture kurallari artik sadece dokumanda degil,
+                ESLint tarafinda `eslint-plugin-boundaries` kutuphanesi ile de
+                kontrol ediliyor. Lint calistiginda domain, application,
+                infrastructure, presentation, composition ve shared UI
+                katmanlari arasindaki import yonleri denetlenir.
+              </p>
+              <div className="mt-4 overflow-hidden rounded-lg border border-zinc-200">
+                {eslintBoundaryRules.map((item) => (
+                  <div
+                    className="grid gap-3 border-b border-zinc-200 p-4 last:border-b-0 md:grid-cols-[180px_1fr]"
+                    key={item.from}
+                  >
+                    <strong className="font-mono text-sm">{item.from}</strong>
+                    <p className="text-sm leading-6 text-zinc-600">{item.rule}</p>
+                  </div>
+                ))}
+              </div>
+            </article>
+            <article className="rounded-lg border border-zinc-200 p-5">
+              <h3 className="font-semibold">Config ve Komutlar</h3>
+              <p className="mt-3 text-sm leading-6 text-zinc-600">
+                Kurallar shared ESLint config paketi icinden export edilir ve
+                root ESLint config uzerinden web uygulamasi ile core kaynaklara
+                uygulanir.
+              </p>
+              <ul className="mt-4 space-y-2 text-sm leading-6 text-zinc-600">
+                {eslintBoundaryFiles.map((file) => (
+                  <li className="font-mono text-xs" key={file}>
+                    {file}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 rounded-lg bg-zinc-950 p-4 text-xs leading-6 text-zinc-100">
+                <p className="font-mono">npm run lint</p>
+                <p className="font-mono">npm run lint --workspace=apps/web</p>
+              </div>
+            </article>
+          </div>
+        </section>
+        <section>
           <h2 className="text-xl font-semibold">File Boundaries</h2>
           <div className="mt-4 overflow-hidden rounded-lg border border-zinc-200">
             {fileBoundaries.map((boundary) => (
@@ -409,4 +494,6 @@ packages/
     </main>
   );
 }
+
+
 
