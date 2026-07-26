@@ -1,0 +1,14 @@
+com\monas\backend\auth\core\application\LoginUserCommand.class
+com\monas\backend\auth\core\application\AuthResult.class
+com\monas\backend\auth\core\application\RegisterUserCommand.class
+com\monas\backend\auth\core\application\PasswordHasher.class
+com\monas\backend\auth\core\application\InvalidCredentialsException.class
+com\monas\backend\auth\core\application\LoginUserUseCase.class
+com\monas\backend\auth\core\application\RegisterUserUseCase.class
+com\monas\backend\auth\core\domain\Username.class
+com\monas\backend\auth\core\domain\AuthRepository.class
+com\monas\backend\auth\core\domain\User.class
+com\monas\backend\auth\core\application\AuthTokenIssuer.class
+com\monas\backend\auth\core\application\UserAlreadyExistsException.class
+com\monas\backend\auth\core\domain\AuthToken.class
+com\monas\backend\auth\core\domain\PasswordHash.class

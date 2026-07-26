@@ -1,0 +1,3 @@
+com\monas\backend\auth\core\application\AuthUseCaseTests.class
+com\monas\backend\auth\core\application\AuthUseCaseTests$InMemoryRepository.class
+com\monas\backend\auth\core\application\AuthUseCaseTests$PlainPasswordHasher.class
