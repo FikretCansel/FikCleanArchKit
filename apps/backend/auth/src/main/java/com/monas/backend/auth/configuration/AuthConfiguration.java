@@ -1,12 +1,12 @@
 package com.monas.backend.auth.configuration;
 
-import com.monas.backend.auth.core.application.AuthTokenIssuer;
-import com.monas.backend.auth.core.application.LoginUserUseCase;
-import com.monas.backend.auth.core.application.PasswordHasher;
-import com.monas.backend.auth.core.application.RegisterUserUseCase;
-import com.monas.backend.auth.core.domain.AuthRepository;
-import com.monas.backend.auth.core.domain.User;
-import com.monas.backend.auth.core.domain.Username;
+import com.monas.backend.auth.core.application.port.AuthTokenIssuer;
+import com.monas.backend.auth.core.application.service.LoginUserUseCase;
+import com.monas.backend.auth.core.application.port.PasswordHasher;
+import com.monas.backend.auth.core.application.service.RegisterUserUseCase;
+import com.monas.backend.auth.core.domain.port.AuthRepository;
+import com.monas.backend.auth.core.domain.model.User;
+import com.monas.backend.auth.core.domain.model.Username;
 import com.monas.backend.auth.infrastructure.BCryptPasswordHasher;
 import com.monas.backend.auth.infrastructure.InMemoryAuthRepository;
 import com.monas.backend.auth.infrastructure.JwtTokenProvider;
@@ -63,3 +63,4 @@ public class AuthConfiguration {
         return new RegisterUserUseCase(authRepository, passwordHasher, authTokenIssuer);
     }
 }
+

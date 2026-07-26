@@ -2,9 +2,9 @@ package com.monas.backend.auth.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monas.backend.auth.configuration.AuthConfiguration;
-import com.monas.backend.auth.core.application.LoginUserUseCase;
-import com.monas.backend.auth.core.application.RegisterUserUseCase;
-import com.monas.backend.auth.core.domain.AuthRepository;
+import com.monas.backend.auth.core.application.service.LoginUserUseCase;
+import com.monas.backend.auth.core.application.service.RegisterUserUseCase;
+import com.monas.backend.auth.core.domain.port.AuthRepository;
 import com.monas.backend.auth.infrastructure.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -127,3 +127,4 @@ class AuthControllerTests {
                 .andExpect(jsonPath("$.message").value("Kullanici zaten mevcut: " + username));
     }
 }
+

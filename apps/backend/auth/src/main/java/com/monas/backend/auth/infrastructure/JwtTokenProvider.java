@@ -1,8 +1,8 @@
 package com.monas.backend.auth.infrastructure;
 
-import com.monas.backend.auth.core.application.AuthTokenIssuer;
-import com.monas.backend.auth.core.domain.AuthToken;
-import com.monas.backend.auth.core.domain.User;
+import com.monas.backend.auth.core.application.port.AuthTokenIssuer;
+import com.monas.backend.auth.core.domain.model.AuthToken;
+import com.monas.backend.auth.core.domain.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,3 +52,4 @@ public class JwtTokenProvider implements AuthTokenIssuer {
         return new AuthToken(token, expiresAt);
     }
 }
+

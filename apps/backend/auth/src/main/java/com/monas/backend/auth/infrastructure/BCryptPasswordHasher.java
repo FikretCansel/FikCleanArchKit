@@ -1,7 +1,7 @@
 package com.monas.backend.auth.infrastructure;
 
-import com.monas.backend.auth.core.application.PasswordHasher;
-import com.monas.backend.auth.core.domain.PasswordHash;
+import com.monas.backend.auth.core.application.port.PasswordHasher;
+import com.monas.backend.auth.core.domain.model.PasswordHash;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Objects;
@@ -24,3 +24,4 @@ public class BCryptPasswordHasher implements PasswordHasher {
         return passwordEncoder.matches(rawPassword, passwordHash.value());
     }
 }
+

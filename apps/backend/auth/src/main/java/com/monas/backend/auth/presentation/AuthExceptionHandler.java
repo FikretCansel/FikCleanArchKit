@@ -1,7 +1,7 @@
 package com.monas.backend.auth.presentation;
 
-import com.monas.backend.auth.core.application.InvalidCredentialsException;
-import com.monas.backend.auth.core.application.UserAlreadyExistsException;
+import com.monas.backend.auth.core.application.exception.InvalidCredentialsException;
+import com.monas.backend.auth.core.application.exception.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,3 +28,4 @@ public class AuthExceptionHandler {
                 .body(new ErrorResponse(exception.getMessage()));
     }
 }
+

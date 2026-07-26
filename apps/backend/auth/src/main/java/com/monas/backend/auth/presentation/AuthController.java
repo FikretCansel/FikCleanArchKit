@@ -1,10 +1,10 @@
 package com.monas.backend.auth.presentation;
 
-import com.monas.backend.auth.core.application.AuthResult;
-import com.monas.backend.auth.core.application.LoginUserCommand;
-import com.monas.backend.auth.core.application.LoginUserUseCase;
-import com.monas.backend.auth.core.application.RegisterUserCommand;
-import com.monas.backend.auth.core.application.RegisterUserUseCase;
+import com.monas.backend.auth.core.application.result.AuthResult;
+import com.monas.backend.auth.core.application.command.LoginUserCommand;
+import com.monas.backend.auth.core.application.service.LoginUserUseCase;
+import com.monas.backend.auth.core.application.command.RegisterUserCommand;
+import com.monas.backend.auth.core.application.service.RegisterUserUseCase;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,3 +45,4 @@ public class AuthController {
         );
     }
 }
+

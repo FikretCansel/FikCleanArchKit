@@ -1,8 +1,8 @@
 package com.monas.backend.auth.infrastructure;
 
-import com.monas.backend.auth.core.domain.AuthRepository;
-import com.monas.backend.auth.core.domain.User;
-import com.monas.backend.auth.core.domain.Username;
+import com.monas.backend.auth.core.domain.port.AuthRepository;
+import com.monas.backend.auth.core.domain.model.User;
+import com.monas.backend.auth.core.domain.model.Username;
 
 import java.util.Map;
 import java.util.Optional;
@@ -28,3 +28,4 @@ public class InMemoryAuthRepository implements AuthRepository {
         return user;
     }
 }
+
