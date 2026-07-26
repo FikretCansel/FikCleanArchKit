@@ -22,12 +22,14 @@ public class LoginUserUseCase {
             PasswordHasher passwordHasher,
             AuthTokenIssuer tokenIssuer
     ) {
+        // Note: Dependency inversion ile use-case framework'ten bagimsiz pure Java olarak kalir.
         this.authRepository = Objects.requireNonNull(authRepository, "authRepository must not be null");
         this.passwordHasher = Objects.requireNonNull(passwordHasher, "passwordHasher must not be null");
         this.tokenIssuer = Objects.requireNonNull(tokenIssuer, "tokenIssuer must not be null");
     }
 
     public AuthResult execute(LoginUserCommand command) {
+        // Note: Login akisi once user'i porttan bulur, sonra hash karsilastirir ve token uretir.
         Objects.requireNonNull(command, "command must not be null");
 
         Username username = toUsername(command.username());

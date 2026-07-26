@@ -1,8 +1,8 @@
 package com.monas.backend.auth.infrastructure;
 
-import com.monas.backend.auth.core.domain.port.AuthRepository;
 import com.monas.backend.auth.core.domain.model.User;
 import com.monas.backend.auth.core.domain.model.Username;
+import com.monas.backend.auth.core.domain.port.AuthRepository;
 
 import java.util.Map;
 import java.util.Optional;
@@ -14,6 +14,7 @@ public class InMemoryAuthRepository implements AuthRepository {
 
     @Override
     public Optional<User> findByUsername(Username username) {
+        // Note: Repository pattern; core veri kaynaginin Map mi DB mi oldugunu bilmez.
         return Optional.ofNullable(users.get(username.value()));
     }
 
@@ -24,8 +25,8 @@ public class InMemoryAuthRepository implements AuthRepository {
 
     @Override
     public User save(User user) {
+        // Note: In-memory adapter demo/test icin kullanilir; JPA adapter ayni portu implemente edebilir.
         users.put(user.username().value(), user);
         return user;
     }
 }
-

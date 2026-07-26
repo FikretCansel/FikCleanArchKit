@@ -23,12 +23,14 @@ public class RegisterUserUseCase {
             PasswordHasher passwordHasher,
             AuthTokenIssuer tokenIssuer
     ) {
+        // Note: Use-case somut DB/JWT/BCrypt siniflarina degil port arayuzlerine baglanir.
         this.authRepository = Objects.requireNonNull(authRepository, "authRepository must not be null");
         this.passwordHasher = Objects.requireNonNull(passwordHasher, "passwordHasher must not be null");
         this.tokenIssuer = Objects.requireNonNull(tokenIssuer, "tokenIssuer must not be null");
     }
 
     public AuthResult execute(RegisterUserCommand command) {
+        // Note: Application service tek bir is akisini yonetir: validate, kontrol et, kaydet, token uret.
         Objects.requireNonNull(command, "command must not be null");
 
         Username username = new Username(command.username());

@@ -12,20 +12,22 @@ public class AuthExceptionHandler {
 
     @ExceptionHandler(InvalidCredentialsException.class)
     ResponseEntity<ErrorResponse> handleInvalidCredentials(InvalidCredentialsException exception) {
+        // Note: Global exception handling; auth hatasi HTTP 401'e merkezi olarak map edilir.
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new ErrorResponse(exception.getMessage()));
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     ResponseEntity<ErrorResponse> handleDuplicateUser(UserAlreadyExistsException exception) {
+        // Note: Domain/application exception HTTP 409 Conflict cevabina cevrilir.
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(new ErrorResponse(exception.getMessage()));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     ResponseEntity<ErrorResponse> handleValidation(IllegalArgumentException exception) {
+        // Note: Validation hatalari HTTP 400 Bad Request olarak tek yerden donulur.
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(exception.getMessage()));
     }
 }
-

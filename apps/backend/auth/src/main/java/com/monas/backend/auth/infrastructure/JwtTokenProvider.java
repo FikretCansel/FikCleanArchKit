@@ -27,10 +27,12 @@ public class JwtTokenProvider implements AuthTokenIssuer {
             @Value("${auth.jwt.secret}") String secret,
             @Value("${auth.jwt.expiration-seconds}") long expirationSeconds
     ) {
+        // Note: @Value application.properties degerlerini Spring bean'e inject eder.
         this(secret, expirationSeconds, Clock.systemUTC());
     }
 
     public JwtTokenProvider(String secret, long expirationSeconds, Clock clock) {
+        // Note: Clock inject edilerek zaman bagimli kod deterministik test edilebilir.
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.expirationSeconds = expirationSeconds;
         this.clock = clock;
@@ -38,6 +40,7 @@ public class JwtTokenProvider implements AuthTokenIssuer {
 
     @Override
     public AuthToken issueFor(User user) {
+        // Note: JWT stateless authentication saglar; subject ve claim'ler token icinde tasinir.
         Instant issuedAt = clock.instant();
         Instant expiresAt = issuedAt.plusSeconds(expirationSeconds);
         String token = Jwts.builder()
@@ -52,4 +55,3 @@ public class JwtTokenProvider implements AuthTokenIssuer {
         return new AuthToken(token, expiresAt);
     }
 }
-

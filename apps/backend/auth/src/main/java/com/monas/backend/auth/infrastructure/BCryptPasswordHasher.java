@@ -11,11 +11,13 @@ public class BCryptPasswordHasher implements PasswordHasher {
     private final PasswordEncoder passwordEncoder;
 
     public BCryptPasswordHasher(PasswordEncoder passwordEncoder) {
+        // Note: Strategy/Adapter; PasswordEncoder degisebilir, core PasswordHasher portu sabit kalir.
         this.passwordEncoder = Objects.requireNonNull(passwordEncoder, "passwordEncoder must not be null");
     }
 
     @Override
     public PasswordHash hash(String rawPassword) {
+        // Note: Parola plain text saklanmaz; BCrypt salt'li tek yonlu hash uretir.
         return new PasswordHash(passwordEncoder.encode(rawPassword));
     }
 
@@ -24,4 +26,3 @@ public class BCryptPasswordHasher implements PasswordHasher {
         return passwordEncoder.matches(rawPassword, passwordHash.value());
     }
 }
-
