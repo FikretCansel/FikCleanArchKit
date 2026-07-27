@@ -1,29 +1,61 @@
-# 🧱 Proje: CleanShop Frontend (TypeScript + Nextjs)
+# Monas Architecture
 
-## 🎯 Amaç
+**Monas Architecture** is a production-oriented monorepo that demonstrates how to build scalable and maintainable applications using modern software architecture principles and industry best practices.
 
-Bu proje, Next.js + TypeScript kullanılarak geliştirilecek bir e-ticaret frontend uygulamasıdır. Uygulama çalışabilmesi için, next js de yine bu endpointleri çok basit bir şekilde oluştur. Örnegin, /user/login ve eger ki kullanıcı fikret, password fikret ise, a125sdfg gibi token ve gerekli basit degerler döndürsün. Dedigim gibi burada amaç backend degil, frontendde arhitecture görmek. Ayrıca frontend tarafında tasarım aşırı basit olsun, tasarım yapmaya ugraşma, tek amacımız arhitecture'ı görmek. Uygulama yine belirtilen aksiyonları gerçekleştirebilsin, kod çalışsın.
+The repository consists of three main applications:
 
-Canlı demo: https://fik-clean-arch-kit.vercel.app/
+- **Backend** — Spring Boot
+- **Web** — Next.js
+- **Mobile** — React Native
 
----
+The **Web** and **Mobile** applications follow a consistent architectural approach and share similar code organization and reusable patterns wherever possible, making it easier to maintain and scale multiple client applications.
 
-# 🧩 1. STEP — Domain & Modül Sınırları (DDD Temeli)
+## Architecture
 
-Uygulama aşağıdaki bounded context’lere ayrılacaktır:
+Monas Architecture is built around modern architectural patterns, including:
 
-* Auth (login / register / token yönetimi)
-* Catalog (ürün listeleme)
-* User Preferences (tema, device, layout)
-* Notification (toast, system messages)
+- Clean Architecture
+- Hexagonal Architecture (Ports & Adapters)
+- Domain-Driven Design (DDD)
+- CQRS (Command Query Responsibility Segregation)
+- Event-Driven Architecture
+- Modular Monorepo Structure
 
-### Kullanılacak yaklaşım:
+## Best Practices
 
-* Domain Driven Design (DDD)
-* Feature-based module structure
-* Her modül bağımsız olacak
+This project also demonstrates enterprise-level development practices such as:
 
-Her modül kendi içinde şu yapıyı taşıyacak:
+- Feature-based project organization
+- Shared libraries and reusable modules
+- Dependency Injection
+- Comprehensive testing strategy
+- SOLID principles
+- Separation of Concerns
+- Scalable folder structure
+- Consistent coding standards
+
+## Goal
+
+The primary goal of this repository is to provide a practical reference for developers who want to learn how to structure large-scale applications using modern architecture patterns and best practices.
+
+Rather than being a simple demo project, Monas Architecture aims to illustrate how production-ready applications can be organized to remain maintainable, testable, and scalable as they grow.
+
+# 🧩 Step 1 — Domain & Module Boundaries (DDD Foundation)
+
+The application is divided into the following **Bounded Contexts**:
+
+- Auth (login, registration, token management)
+- Catalog (product listing)
+- User Preferences (theme, device, layout)
+- Notification (toast notifications, system messages)
+
+## Architectural Approach
+
+- Domain-Driven Design (DDD)
+- Feature-based module structure
+- Independent feature modules
+
+Each feature follows the same internal structure:
 
 ```text
 domain/
@@ -32,26 +64,26 @@ infrastructure/
 presentation/
 ```
 
-👉 Amaç: “feature bağımsızlığı”
+> **Goal:** Feature independence with clear architectural boundaries.
 
-### ✅ Step 1 Durumu
+## ✅ Step 1 Status
 
-Step 1 uygulandı.
+Step 1 has been completed.
 
-Ortak clean architecture kodu:
+### Shared Clean Architecture features
 
-* `packages/core/src/features/auth`
-* `packages/core/src/features/catalog`
-* `packages/core/src/features/user-preferences`
-* `packages/core/src/features/notification`
+- `packages/core/src/features/auth`
+- `packages/core/src/features/catalog`
+- `packages/core/src/features/user-preferences`
+- `packages/core/src/features/notification`
 
-Uygulama kabuklari:
+### Application shells
 
-* `apps/web` → Next.js web uygulamasi
-* `apps/mobile` → ileride React Native uygulamasi icin ayrildi
-* `apps/backend` → ileride Spring Boot backend icin ayrildi
+- `apps/web` → Next.js web application
+- `apps/mobile` → Reserved for the future React Native application
+- `apps/backend` → Reserved for the future Spring Boot backend
 
-Her bounded context altında şu katmanlar oluşturuldu:
+Each bounded context contains the following layers:
 
 ```text
 domain/
@@ -60,147 +92,183 @@ infrastructure/
 presentation/
 ```
 
-Çalışan basit UI route'ları:
+### Available routes
 
-* `/` ve `/login` → Auth login UI
-* `/catalog` → Catalog UI iskeleti
-* `/preferences` → User Preferences UI iskeleti
-* `/notifications` → Notification UI iskeleti
-* `/docs` → Step 1 mimari dokümantasyon ekranı
+- `/` and `/login` → Authentication UI
+- `/catalog` → Catalog UI skeleton
+- `/preferences` → User Preferences UI skeleton
+- `/notifications` → Notification UI skeleton
+- `/docs` → Architecture documentation for Step 1
 
-Ana header üzerinden bu sayfalara erişilebilir.
+All pages are accessible through the main navigation.
 
-### 📌 Proje Kuralı
+### 📌 Project Rule
 
-Her yeni step veya mimari değişiklikte `ReadMe.md` güncel tutulacaktır.
+The `README.md` must be updated whenever a new architectural step or significant design change is introduced.
 
 ---
 
-# 🧠 2. STEP — Auth Sistemi (JWT Login Flow)
+# 🧠 Step 2 — Authentication System (JWT Login Flow)
 
-## Özellikler:
+## Features
 
-* Login
-* Register
-* JWT token ile session yönetimi
-* Login sonrası toast notification
+- Login
+- User registration
+- JWT-based session management
+- Toast notification after successful login
 
-## Kullanılacak patternler:
+## Applied Patterns
 
 ### ✔ Clean Architecture
 
-* UI → Application → Domain → Infrastructure
+```text
+Presentation
+    ↓
+Application
+    ↓
+Domain
+    ↓
+Infrastructure
+```
 
 ### ✔ Use Case Pattern
 
-* LoginUserUseCase
-* RegisterUserUseCase
+- `LoginUserUseCase`
+- `RegisterUserUseCase`
 
 ### ✔ Repository Pattern
 
-* AuthRepository (interface)
-* ApiAuthRepository (implementation)
+- `AuthRepository`
+- `ApiAuthRepository`
 
-### ✔ Value Object
+### ✔ Value Objects
 
-* Email
-* Password
-* Token
+- `Email`
+- `Password`
+- `Token`
 
 ---
 
-## Akış:
+## Request Flow
 
-UI direkt API çağırmaz.
+The UI never communicates directly with the API.
 
 ```text
 LoginPage
- → LoginUserUseCase
- → AuthRepository
- → API Client
- → Response
+    ↓
+LoginUserUseCase
+    ↓
+AuthRepository
+    ↓
+API Client
+    ↓
+Response
 ```
 
 ---
 
-## Event Driven yaklaşım:
+## Event-Driven Flow
 
-Login başarılı olduğunda:
+After a successful login:
 
 ```text
 UserLoggedInEvent
 ```
 
-yayınlanır.
+is published.
 
-Dinleyen sistemler:
+Subscribers:
 
-* Toast system
-* Analytics
-* Navigation handler
+- Toast system
+- Analytics
+- Navigation handler
 
-### ✅ Step 2 Durumu
+## ✅ Step 2 Status
 
-Step 2 uygulandı.
+Step 2 has been completed.
 
-Auth bounded context altında şu parçalar eklendi:
+### Auth bounded context
 
-* Domain: `UserIdentity`, `Password`, `Token`, `AuthSession`, `AuthRepository`, `UserLoggedInEvent`
-* Application: `LoginUserUseCase`, `RegisterUserUseCase`
-* Infrastructure: `AuthApiClient`, `ApiAuthRepository`, `BrowserSessionStorage`
-* Presentation: çalışan login/register formu
+#### Domain
 
-Çalışan API route'ları:
+- `UserIdentity`
+- `Password`
+- `Token`
+- `AuthSession`
+- `AuthRepository`
+- `UserLoggedInEvent`
 
-* `POST /user/login`
-  * `fikret / fikret` için `a125sdfg` token döner
-  * hatalı bilgi için `401` döner
-* `POST /user/register`
-  * basit fake register session döner
+#### Application
 
-Event driven notification akışı:
+- `LoginUserUseCase`
+- `RegisterUserUseCase`
+
+#### Infrastructure
+
+- `AuthApiClient`
+- `ApiAuthRepository`
+- `BrowserSessionStorage`
+
+#### Presentation
+
+- Functional Login and Register forms
+
+### API Endpoints
+
+#### `POST /user/login`
+
+- `fikret / fikret` returns token `a125sdfg`
+- Invalid credentials return **401 Unauthorized**
+
+#### `POST /user/register`
+
+- Returns a fake registration session
+
+### Event-driven login flow
 
 ```text
 LoginPageView
- → LoginUserUseCase
- → ApiAuthRepository
- → /user/login
- → UserLoggedInEvent
- → AuthToastSubscriber
- → Toast UI
+    ↓
+LoginUserUseCase
+    ↓
+ApiAuthRepository
+    ↓
+POST /user/login
+    ↓
+UserLoggedInEvent
+    ↓
+AuthToastSubscriber
+    ↓
+Toast UI
 ```
 
-Login başarılı olduğunda token browser `localStorage` içine kaydedilir.
+The authentication token is stored in the browser's `localStorage` after a successful login.
 
-Composition ayrımı:
+### Composition
 
-* `loginComposition.ts` server-safe tutulur; use case, repository ve API client
-  burada kurulur.
-* Client component'ler application service veya repository import etmez.
-* Login formu server action üzerinden use case çalıştırır; browser'a özel
-  session yazma işi ayrı client adapter'da kalır.
-* `/login` sayfası SEO metadata ve sayfa metni gibi server kaynaklı bilgileri
-  server component tarafında composition'dan alabilir.
-* Derin component ağacına servis prop'u taşınmaz; presentation katmanında
-  feature-specific controller context kullanılır. Alt component'ler
-  `useLoginPageController()` ile sadece login/register niyetini bildirir.
+- `loginComposition.ts` is server-safe and constructs the use case, repository, and API client.
+- Client components never import repositories or application services directly.
+- Login actions execute through server actions.
+- Browser-specific session persistence is delegated to a dedicated client adapter.
+- Server Components are responsible for SEO metadata and server-side page content.
+- Feature-specific controller contexts eliminate deep prop drilling within the presentation layer.
 
 ---
 
-# 🧾 3. STEP — Product Catalog (Ürün Listeleme Sistemi)
+# 🧾 Step 3 — Product Catalog
 
-## Özellikler:
+## Features
 
-* Ürünleri API’den çekme
-* Empty state (ürün yoksa Not Found)
-* Loading / Error state yönetimi
+- Retrieve products from the API
+- Empty state handling
+- Loading and error state management
 
-## Kullanılacak patternler:
+## Applied Patterns
 
 ### ✔ CQRS
 
-* GetProductsQuery (read model)
-* No mutation logic UI’da
+- `GetProductsQuery`
+- Read-only UI
 
 ### ✔ State Pattern
 
@@ -213,95 +281,107 @@ Error
 
 ### ✔ Repository Pattern
 
-* ProductRepository abstraction
-* ApiProductRepository implementation
+- `ProductRepository`
+- `ApiProductRepository`
 
 ---
 
-## UI akışı:
+## UI Flow
 
-UI sadece state dinler:
-
-```text
-ProductPage
- → GetProductsQuery
- → ProductRepository
- → API
- → StateEmitter
-```
-
----
-
-## Not Found case:
-
-If ürün yoksa:
-
-```text
-EmptyState → NotFoundView
-```
-
-IF/ELSE UI’da kullanılmaz, state ile çözülür.
-
-### ✅ Step 3 Durumu
-
-Step 3 uygulandı.
-
-Catalog bounded context altında şu parçalar eklendi:
-
-* Domain: `Product`, `ProductRepository`, `ProductListMode`
-* Application: `GetProductsQuery`, `ProductListState`
-* Infrastructure: `CatalogApiClient`, `ApiProductRepository`
-* Presentation: `CatalogPageView`, `ProductListStateView`
-
-Çalışan API route'u:
-
-* `GET /api/products`
-  * varsayılan durumda ürün listesi döner
-  * `?mode=empty` ile boş liste döner
-  * `?mode=error` ile hata state'i test edilir
-
-Catalog UI akışı:
+The UI only reacts to application state.
 
 ```text
 CatalogPageView
- → GetProductsQuery
- → ProductRepository
- → CatalogApiClient
- → /api/products
- → ProductListState
- → ProductListStateView
+    ↓
+GetProductsQuery
+    ↓
+ProductRepository
+    ↓
+CatalogApiClient
+    ↓
+GET /api/products
+    ↓
+ProductListState
+    ↓
+ProductListStateView
 ```
 
-UI doğrudan API çağırmaz. Loading, Empty, Loaded ve Error render davranışı
-`ProductListStateView` içindeki state renderer map üzerinden yönetilir.
+---
+
+## Empty State
+
+If no products are returned:
+
+```text
+EmptyState
+    ↓
+NotFoundView
+```
+
+Conditional rendering is handled through the state model rather than explicit UI `if/else` statements.
+
+## ✅ Step 3 Status
+
+Step 3 has been completed.
+
+### Catalog bounded context
+
+#### Domain
+
+- `Product`
+- `ProductRepository`
+- `ProductListMode`
+
+#### Application
+
+- `GetProductsQuery`
+- `ProductListState`
+
+#### Infrastructure
+
+- `CatalogApiClient`
+- `ApiProductRepository`
+
+#### Presentation
+
+- `CatalogPageView`
+- `ProductListStateView`
+
+### API Endpoint
+
+#### `GET /api/products`
+
+- Default → Product list
+- `?mode=empty` → Empty state
+- `?mode=error` → Error state
+
+Rendering behavior for **Loading**, **Empty**, **Loaded**, and **Error** is fully managed through the state renderer map inside `ProductListStateView`.
 
 ---
 
-# 🎨 4. STEP — UI Rendering Strategy System (En kritik kısım)
+# 🎨 Step 4 — UI Rendering Strategy System
 
-## Özellik:
+One of the primary goals of this project is to completely decouple business logic from UI rendering.
 
-Aynı ürün listesi farklı cihazlarda farklı görünür:
+The same data should be rendered differently depending on the current platform or user preferences.
 
-* Desktop → Grid view
-* Mobile → Vertical list
-* Tablet → Hybrid layout
-* Kullanıcı seçimine göre Card style değişir
+## Rendering Examples
 
----
+- Desktop → Grid layout
+- Mobile → Vertical list
+- Tablet → Hybrid layout
+- User preference → Card style selection
 
-## Kullanılacak patternler:
+## Applied Patterns
 
 ### ✔ Strategy Pattern
 
 ```text
 ProductLayoutStrategy
- ├── GridStrategy
- ├── VerticalListStrategy
- ├── HorizontalCarouselStrategy
+    ├── GridStrategy
+    ├── VerticalListStrategy
+    └── HorizontalCarouselStrategy
 ```
-
----
 
 ### ✔ Factory Pattern
 
@@ -309,53 +389,46 @@ ProductLayoutStrategy
 LayoutStrategyFactory
 ```
 
-device + user preference → strategy üretir
+Produces the appropriate rendering strategy based on:
 
----
+- Device capabilities
+- User preferences
 
-### ✔ Device Abstraction Layer
+### ✔ Device Abstraction
 
 ```text
 DeviceCapabilityProvider
 ```
 
-UI asla:
+The UI never performs checks such as:
 
 ```ts
-if (device === 'mobile')
+if (device === "mobile")
 ```
 
-görmez.
+Device-specific behavior belongs to the architecture layer, not the presentation layer.
 
----
-
-## UI rendering:
+## Rendering Flow
 
 ```text
 ProductPage
- → LayoutStrategy.resolve()
- → strategy.render(products)
+    ↓
+LayoutStrategy.resolve()
+    ↓
+strategy.render(products)
 ```
 
 ---
 
-# 🔔 5. STEP — Event Driven Notification System
+# 🔔 Step 5 — Event-Driven Notification System
 
-# Final Result
+## Features
 
-Sisteme axios eklendi diyelim. Sistem nasıl olmadı
+- Login success notifications
+- Product added notifications
+- System alerts
 
-Proje diyelim react dan angular'a taşındı. Bu arhitecture business logici bagımsız yaptık ve aynı kodun kullanabiliyor olması gerekiyordu.
-
-## Özellikler:
-
-* Login success toast
-* Product added notification
-* System alerts
-
----
-
-## Kullanılacak patternler:
+## Applied Patterns
 
 ### ✔ Event Bus
 
@@ -365,104 +438,134 @@ EventBus.publish()
 
 ### ✔ Observer Pattern
 
-* ToastSubscriber
-* NotificationSubscriber
-* AnalyticsSubscriber
+- ToastSubscriber
+- NotificationSubscriber
+- AnalyticsSubscriber
 
----
-
-## Örnek akış:
+## Example Flow
 
 ```text
 UserLoggedInEvent
- → ToastRequestedEvent
- → ToastRenderer
- → UI Toast
+    ↓
+ToastRequestedEvent
+    ↓
+ToastRenderer
+    ↓
+UI Toast
 ```
 
 ---
 
-# 🚀 EK ÖZELLİKLER (sonradan eklenecek — mimariyi zorlamak için)
+# 🚀 Future Enhancements
 
-Sistem büyüdükçe şu özellikler eklenecek:
+The following features will be added over time to further validate and stress-test the architecture.
 
----
+## Favorites System
 
-## 1. Favorites System
+Features
 
-* ProductFavoritedEvent
-* Offline sync support
+- ProductFavoritedEvent
+- Offline synchronization
 
-👉 Pattern:
+Patterns
 
-* Observer
-* Repository Decorator
-
----
-
-## 2. Offline Cache Layer
-
-* API fallback cache
-
-👉 Pattern:
-
-* Decorator Pattern
-* Cache-first strategy
+- Observer Pattern
+- Repository Decorator
 
 ---
 
-## 3. Theme System
+## Offline Cache Layer
 
-* Light / Dark / Custom themes
+Features
 
-👉 Pattern:
+- API fallback cache
+- Offline support
 
-* Strategy Pattern
-* State Machine
+Patterns
 
----
-
-## 4. Advanced Filtering
-
-* Price filter
-* Category filter
-* Stock filter
-
-👉 Pattern:
-
-* Specification Pattern
+- Decorator Pattern
+- Cache-First Strategy
 
 ---
 
-## 5. Form Validation System
+## Theme System
 
-* Domain-level validation (UI değil domain)
+Features
 
-👉 Pattern:
+- Light theme
+- Dark theme
+- Custom themes
 
-* Value Objects
-* Result/Either Pattern
+Patterns
 
----
-
-# 🧱 GENEL MİMARİ KURALLAR
-
-* UI katmanı business logic içermez
-* IF/ELSE sadece state machine içinde sınırlı kullanılır
-* API çağrısı sadece infrastructure layer’da olur
-* Feature’lar birbirini direkt çağırmaz
-* Her şey event veya abstraction üzerinden konuşur
+- Strategy Pattern
+- State Machine
 
 ---
 
-# 🧠 SONUÇ FELSEFESİ
+## Advanced Filtering
 
-Bu proje şu amaçla tasarlanır:
+Features
 
-> “Kod okunabilirliği değil, mimari disiplin göstermek”
+- Price filtering
+- Category filtering
+- Stock filtering
 
-Ama aynı zamanda:
+Pattern
 
-* Yeni feature eklemek kolay olmalı
+- Specification Pattern
+
+---
+
+## Form Validation
+
+Validation belongs to the domain, not the UI.
+
+Patterns
+
+- Value Objects
+- Result / Either Pattern
+
+---
+
+# 🏗️ Architectural Goals
+
+One of the primary objectives of this repository is to demonstrate that business logic should remain independent of frameworks and implementation details.
+
+For example:
+
+- Replacing **Axios** with another HTTP client should only affect the infrastructure layer.
+- Migrating the frontend from **React** to **Angular** should not require changes to the application or domain layers.
+- Business rules should remain reusable regardless of the UI framework.
+
+The architecture is intentionally designed so that business logic can outlive individual technologies.
+
+---
+
+# 🧱 General Architecture Principles
+
+- The Presentation layer contains no business logic.
+- Conditional rendering is limited to state machines or strategy implementations.
+- API communication exists only within the Infrastructure layer.
+- Features never communicate with each other directly.
+- Cross-feature interaction happens through abstractions or domain events.
+- Dependencies always point inward toward the Domain.
+- Business rules remain framework-independent.
+
+---
+
+# 🧠 Philosophy
+
+The purpose of this project is not simply to produce clean code.
+
+Its goal is to demonstrate architectural discipline through real-world patterns and scalable design.
+
+At the same time, the architecture should make it easy to:
+
+- Add new features
+- Replace implementations
+- Test business logic independently
+- Scale the application without increasing coupling
+- Share business logic across multiple platforms
 * Var olan kod bozulmadan genişleyebilmeli
 * Bir modül değişince diğerleri etkilenmemeli
