@@ -70,18 +70,20 @@ presentation/
 
 Step 1 has been completed.
 
-### Shared Clean Architecture features
+### Shared Clean Architecture packages
 
 - `packages/core/src/features/auth`
 - `packages/core/src/features/catalog`
 - `packages/core/src/features/user-preferences`
 - `packages/core/src/features/notification`
+- `packages/backend/auth-core` -> framework-independent auth domain and application core
 
 ### Application shells
 
 - `apps/web` → Next.js web application
 - `apps/mobile` → Reserved for the future React Native application
-- `apps/backend` → Reserved for the future Spring Boot backend
+- `apps/backend/auth` → Spring Boot auth microservice
+- `apps/backend/catalog` → Spring Boot catalog microservice
 
 Each bounded context contains the following layers:
 
