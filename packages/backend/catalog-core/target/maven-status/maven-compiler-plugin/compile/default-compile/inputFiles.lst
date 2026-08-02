@@ -1,6 +1,0 @@
-D:\fik\FikCleanArchKit\packages\backend\catalog-core\src\main\java\com\monas\backend\catalog\core\application\handler\GetProductDetailQueryHandler.java
-D:\fik\FikCleanArchKit\packages\backend\catalog-core\src\main\java\com\monas\backend\catalog\core\application\handler\GetProductsQueryHandler.java
-D:\fik\FikCleanArchKit\packages\backend\catalog-core\src\main\java\com\monas\backend\catalog\core\application\query\GetProductDetailQuery.java
-D:\fik\FikCleanArchKit\packages\backend\catalog-core\src\main\java\com\monas\backend\catalog\core\application\query\GetProductsQuery.java
-D:\fik\FikCleanArchKit\packages\backend\catalog-core\src\main\java\com\monas\backend\catalog\core\domain\model\Product.java
-D:\fik\FikCleanArchKit\packages\backend\catalog-core\src\main\java\com\monas\backend\catalog\core\domain\port\ProductRepository.java

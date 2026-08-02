@@ -1,6 +1,0 @@
-com\monas\backend\catalog\core\application\handler\GetProductDetailQueryHandler.class
-com\monas\backend\catalog\core\domain\model\Product.class
-com\monas\backend\catalog\core\application\handler\GetProductsQueryHandler.class
-com\monas\backend\catalog\core\application\query\GetProductsQuery.class
-com\monas\backend\catalog\core\domain\port\ProductRepository.class
-com\monas\backend\catalog\core\application\query\GetProductDetailQuery.class
