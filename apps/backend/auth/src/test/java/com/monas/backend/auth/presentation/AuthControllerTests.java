@@ -1,17 +1,14 @@
 package com.monas.backend.auth.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.monas.backend.auth.configuration.AuthConfiguration;
-import com.monas.backend.auth.core.application.service.LoginUserUseCase;
-import com.monas.backend.auth.core.application.service.RegisterUserUseCase;
-import com.monas.backend.auth.core.domain.port.AuthRepository;
-import com.monas.backend.auth.infrastructure.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Map;
 
@@ -20,37 +17,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringBootTest
 class AuthControllerTests {
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     private MockMvc mockMvc;
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
-        AuthConfiguration configuration = new AuthConfiguration();
-        var passwordEncoder = new BCryptPasswordEncoder();
-        var passwordHasher = configuration.passwordHasher(passwordEncoder);
-        AuthRepository authRepository = configuration.authRepository(passwordHasher);
-        var tokenIssuer = new JwtTokenProvider(
-                "FikCleanArchKitDemoSecretForHs256JwtAuthModule123456",
-                3600
-        );
-        LoginUserUseCase loginUserUseCase = configuration.loginUserUseCase(
-                authRepository,
-                passwordHasher,
-                tokenIssuer
-        );
-        RegisterUserUseCase registerUserUseCase = configuration.registerUserUseCase(
-                authRepository,
-                passwordHasher,
-                tokenIssuer
-        );
-
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(new AuthController(loginUserUseCase, registerUserUseCase))
-                .setControllerAdvice(new AuthExceptionHandler())
-                .build();
-        objectMapper = new ObjectMapper();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
@@ -127,4 +106,3 @@ class AuthControllerTests {
                 .andExpect(jsonPath("$.message").value("Kullanici zaten mevcut: " + username));
     }
 }
-

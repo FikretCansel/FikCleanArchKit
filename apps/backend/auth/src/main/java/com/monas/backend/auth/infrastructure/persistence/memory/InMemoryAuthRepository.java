@@ -25,7 +25,7 @@ public class InMemoryAuthRepository implements AuthRepository {
 
     @Override
     public User save(User user) {
-        // Note: In-memory adapter demo/test icin kullanilir; JPA adapter ayni portu implemente edebilir.
+        // Note: In-memory adapter demo/test icin kullanilir; varsayilan app adapter'i JPA/H2'dir.
         users.put(user.username().value(), user);
         return user;
     }

@@ -8,8 +8,8 @@ import com.monas.backend.auth.core.domain.model.User;
 import com.monas.backend.auth.core.domain.model.Username;
 import com.monas.backend.auth.core.domain.port.AuthRepository;
 import com.monas.backend.auth.infrastructure.BCryptPasswordHasher;
-import com.monas.backend.auth.infrastructure.InMemoryAuthRepository;
 import com.monas.backend.auth.infrastructure.JwtTokenProvider;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,23 +30,37 @@ public class AuthConfiguration {
         return new BCryptPasswordHasher(passwordEncoder);
     }
 
-    @Bean
-    public AuthRepository authRepository(PasswordHasher passwordHasher) {
-        // Note: Repository portuna in-memory adapter baglaniyor; gercek DB gelirse sadece adapter degisir.
-        InMemoryAuthRepository repository = new InMemoryAuthRepository();
-        User seedUser = new User(
-                new Username("fikret"),
-                "Fikret",
-                passwordHasher.hash("fikret")
-        );
-        repository.save(seedUser);
-        return repository;
-    }
+    // @Bean
+    // public AuthRepository authRepository(PasswordHasher passwordHasher) {
+    //     // Note: Repository portuna in-memory adapter baglaniyor; gercek DB gelirse sadece adapter degisir.
+    //     InMemoryAuthRepository repository = new InMemoryAuthRepository();
+    //     User seedUser = new User(
+    //             new Username("fikret"),
+    //             "Fikret",
+    //             passwordHasher.hash("fikret")
+    //     );
+    //     repository.save(seedUser);
+    //     return repository;
+    // }
 
     @Bean
     public AuthTokenIssuer authTokenIssuer(JwtTokenProvider tokenProvider) {
         // Note: Dependency Inversion; use-case JWT sinifini degil AuthTokenIssuer portunu bilir.
         return tokenProvider;
+    }
+
+    @Bean
+    public ApplicationRunner seedDefaultUser(AuthRepository authRepository, PasswordHasher passwordHasher) {
+        return args -> {
+            Username username = new Username("fikret");
+            if (!authRepository.existsByUsername(username)) {
+                authRepository.save(new User(
+                        username,
+                        "Fikret",
+                        passwordHasher.hash("fikret")
+                ));
+            }
+        };
     }
 
     @Bean
