@@ -1,4 +1,4 @@
-package com.monas.backend.auth.infrastructure.persistence;
+package com.monas.backend.auth.infrastructure.persistence.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

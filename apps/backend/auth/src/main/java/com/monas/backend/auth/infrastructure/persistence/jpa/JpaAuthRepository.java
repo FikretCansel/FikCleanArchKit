@@ -1,9 +1,10 @@
-package com.monas.backend.auth.infrastructure.persistence;
+package com.monas.backend.auth.infrastructure.persistence.jpa;
 
 import com.monas.backend.auth.core.domain.model.PasswordHash;
 import com.monas.backend.auth.core.domain.model.User;
 import com.monas.backend.auth.core.domain.model.Username;
 import com.monas.backend.auth.core.domain.port.AuthRepository;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

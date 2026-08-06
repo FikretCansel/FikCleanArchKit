@@ -14,6 +14,10 @@ import com.monas.backend.auth.core.domain.model.Username;
 import com.monas.backend.auth.core.domain.port.AuthRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import com.tngtech.archunit.core.importer.ClassFileImporter;
+import com.tngtech.archunit.lang.ArchRule;
+
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
 import java.time.Instant;
 import java.util.Map;
@@ -25,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -71,10 +76,19 @@ class AuthUseCaseTests {
     void loginSucceedsForSeedUser() {
         AuthResult result = new LoginUserUseCase(repository, passwordHasher, tokenIssuer)
                 .execute(new LoginUserCommand("fikret", "fikret"));
+        
+        // ArchRule tanımı: LoginUserUseCase sınıfı Username sınıfına doğrudan bağımlı olmalı (import etmeli/kullanmalı)
+        ArchRule rule = classes()
+                .that().haveSimpleName("LoginUserUseCase")
+                .should().dependOnClassesThat()
+                .haveFullyQualifiedName("com.monas.backend.auth.core.domain.model.Username");
+
+        // İlgili paketteki sınıfları tarar ve kuralı doğrular
+        rule.check(new ClassFileImporter().importPackages("com.monas.backend.auth"));
 
         assertEquals("fikret", result.user().username().value());
         assertEquals("token-fikret", result.token().value());
-        verify(repository).findByUsername(new Username("fikret"));
+        verify(repository, only()).findByUsername(new Username("fikret"));
         verify(passwordHasher).matches("fikret", new PasswordHash("{plain}fikret"));
     }
 

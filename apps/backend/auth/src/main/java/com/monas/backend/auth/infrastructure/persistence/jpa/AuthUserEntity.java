@@ -1,4 +1,4 @@
-package com.monas.backend.auth.infrastructure.persistence;
+package com.monas.backend.auth.infrastructure.persistence.jpa;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

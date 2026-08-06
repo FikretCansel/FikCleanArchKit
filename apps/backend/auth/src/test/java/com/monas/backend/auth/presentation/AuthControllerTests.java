@@ -17,6 +17,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+// Integration Tests for AuthController. These tests use MockMvc to simulate HTTP requests 
+// and verify the responses from the controller endpoints.
 @SpringBootTest
 class AuthControllerTests {
 
