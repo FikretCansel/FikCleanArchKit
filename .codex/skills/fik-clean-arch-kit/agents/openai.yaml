@@ -1,0 +1,3 @@
+display_name: FikCleanArchKit Guide
+short_description: Project-specific guidance for clean architecture, module boundaries, and tests.
+default_prompt: Use the FikCleanArchKit skill to inspect this repository, follow its clean architecture conventions, and make the requested change with focused validation.
