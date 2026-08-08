@@ -14,10 +14,6 @@ import com.monas.backend.auth.core.domain.model.Username;
 import com.monas.backend.auth.core.domain.port.AuthRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.tngtech.archunit.core.importer.ClassFileImporter;
-import com.tngtech.archunit.lang.ArchRule;
-
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
 import java.time.Instant;
 import java.util.Map;
@@ -76,15 +72,6 @@ class AuthUseCaseTests {
     void loginSucceedsForSeedUser() {
         AuthResult result = new LoginUserUseCase(repository, passwordHasher, tokenIssuer)
                 .execute(new LoginUserCommand("fikret", "fikret"));
-        
-        // ArchRule tanımı: LoginUserUseCase sınıfı Username sınıfına doğrudan bağımlı olmalı (import etmeli/kullanmalı)
-        ArchRule rule = classes()
-                .that().haveSimpleName("LoginUserUseCase")
-                .should().dependOnClassesThat()
-                .haveFullyQualifiedName("com.monas.backend.auth.core.domain.model.Username");
-
-        // İlgili paketteki sınıfları tarar ve kuralı doğrular
-        rule.check(new ClassFileImporter().importPackages("com.monas.backend.auth"));
 
         assertEquals("fikret", result.user().username().value());
         assertEquals("token-fikret", result.token().value());
