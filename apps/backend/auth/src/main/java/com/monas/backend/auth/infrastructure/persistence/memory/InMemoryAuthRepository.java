@@ -1,4 +1,4 @@
-package com.monas.backend.auth.infrastructure;
+package com.monas.backend.auth.infrastructure.persistence.memory;
 
 import com.monas.backend.auth.core.domain.model.User;
 import com.monas.backend.auth.core.domain.model.Username;
